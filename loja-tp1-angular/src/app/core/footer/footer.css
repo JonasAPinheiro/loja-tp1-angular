@@ -1,0 +1,11 @@
+.footer {
+    background-color: rebeccapurple;
+    color: white;
+    position: fixed;
+    width: 100%;
+    padding: 15px 0;
+    text-align: center;
+    bottom: 0;
+    border-top-left-radius: "30px";
+    border-top-right-radius: "30px";
+}
