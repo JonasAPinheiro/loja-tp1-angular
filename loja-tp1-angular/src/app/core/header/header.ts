@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild} from '@angular/core';
+import { Component, ElementRef, input, output, signal, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -7,10 +7,11 @@ import { Component, ElementRef, ViewChild} from '@angular/core';
   styleUrl: './header.css'
 })
 export class Header {
-  @ViewChild("meuTitulo") titulo!: ElementRef;
+  tituloLoja = input.required<string>();
 
-  ngAfterViewInit() {
-    const titulo: string = "Aula 2 - Conhecendo um pouco de Angular";
-    this.titulo.nativeElement.textContent = titulo;
+  textoSobre = output<string>();
+
+  enviarSobre() {
+    this.textoSobre.emit("Técnicas de Programação 1. Desenvolvido por Jonas");
   }
 }

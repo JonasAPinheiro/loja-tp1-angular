@@ -6,10 +6,6 @@
     text-align: center;
 }
 
-.header:hover {
-    background: linear-gradient(90deg, red, blue, green);
-}
-
 .header nav a {
     color: white;
     margin: 0;
