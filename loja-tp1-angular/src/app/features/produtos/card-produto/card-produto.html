@@ -1,7 +1,20 @@
 <article class="card" [class.promo]="produto().promo">
     <img class="thumb" [src]="produto().imageURL" [alt]="produto().nome"/>
     <div class="conteudo">
-        <h3 class="titulo">{{ produto().nome }}</h3>
+        <header class="cabecalho">
+            <h3 class="titulo">{{ produto().nome }}</h3>
+            @switch (produto().estado) {
+                @case ("novo") {
+                    <span class="selo novo">Novo</span>
+                }
+                @case ("esgotado") {
+                    <span class="selo esgotado">Esgotado</span>
+                }
+            }
+            @if (produto().promo) {
+                <span class="selo promo">Aproveite</span>
+            }
+        </header>
         <p class="desc">{{ produto().descricao }}</p>
 
         <div class="linhapreco">
@@ -11,7 +24,9 @@
     </div>
 
     <div class="acoes">
-        <button class="btn primary" (click)="onAdd()">Adicionar</button>
         <button class="btn ghost" (click)="onview()">Detalhes</button>
+        @if(qtde() > 0 && produto().estado != "esgotado"){
+            <button class="btn primary" (click)="onAdd()">Adicionar</button>
+        }
     </div>
 </article>
