@@ -30,13 +30,14 @@ export class ListaProdutos {
       nome: "Produto 3",
       descricao: "Desc. Prod 3",
       preco: 179.90,
-      estado: "esgotado"
+      estado: "esgotado",
     },
     {
       id: 4,
       nome: "Produto 4",
       descricao: "Desc. Prod 4",
-      preco: 279.90
+      preco: 279.90,
+      estado: "novo",
     }
   ]
 

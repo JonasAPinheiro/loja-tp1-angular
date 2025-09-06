@@ -38,12 +38,6 @@
     color: #4b5563;
 }
 
-.linhapreco {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
 .preco {
     font-weight: 700;
     color: #111827;
