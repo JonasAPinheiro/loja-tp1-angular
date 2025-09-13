@@ -1,18 +1,26 @@
 <section class="catalogo">
     <header class="barradetarefas">
         <h2>Catalogo</h2>
-        <button class="btn sopromo" [class.active]="apenasPromo()" (click)="alternarPromo()">
-            @if(apenasPromo()){
-                <span>Mostar Todos</span>
-            }
-            @else {
-                <span>Somente Promoções</span>
-            }
-        </button>
+        <div>
+            <select>
+                <option value="todos" selected disabled>Tipo</option>
+                @for (categoria of categoriaExibidas(); track $index) {
+                    <option [value]="categoria"> {{ categoria }}</option>
+                }
+            </select>
+            <button class="btn sopromo" [class.active]="apenasPromo()" (click)="alternarPromo()">
+                @if(apenasPromo()){
+                    <span>Mostar Todos</span>
+                }
+                @else {
+                    <span>Somente Promoções</span>
+                }
+            </button>
+        </div>
     </header>
     <div class="grid">
         @for (prod of prodExibidos(); track prod.id) {
-            <app-card-produto [produto]="prod" (add)="onAddProduct($event)" (view)="onViewProduct($event)"></app-card-produto>
+            <app-card-produto [produto]="prod" categoria="categoria" (add)="onAddProduct($event)" (view)="onViewProduct($event)"></app-card-produto>
         } @empty {
             <p class="vazio">Nenhum produto encontrado para o filtro atual!!!</p>
         }

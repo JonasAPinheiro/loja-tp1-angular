@@ -6,4 +6,5 @@ export interface Produto {
     imageURL?: string;
     promo?: boolean;
     estado?: "novo" | "usado" | "esgotado";
+    categoria?: String;
 }

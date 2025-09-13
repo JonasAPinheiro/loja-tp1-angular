@@ -3,6 +3,7 @@
     <div class="conteudo">
         <header class="cabecalho">
             <h3 class="titulo">{{ produto().nome }}</h3>
+            <h4 class="categoria">{{ produto().categoria }}</h4>
             @switch (produto().estado) {
                 @case ("novo") {
                     <span class="selo novo">Novo</span>

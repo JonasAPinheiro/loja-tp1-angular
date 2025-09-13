@@ -12,6 +12,7 @@ import { TruncarPipe } from '../../../shared/pipes/truncar/truncar-pipe';
 })
 export class CardProduto {
   produto = input.required<Produto>();
+  categoria = input.required<String>();
 
   qtde = signal<number>(0);
 
