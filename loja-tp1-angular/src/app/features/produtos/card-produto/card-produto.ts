@@ -1,9 +1,10 @@
-import { Component, input,   output, signal } from '@angular/core';
+import { Component, inject, input,   output, signal } from '@angular/core';
 import { Produto } from '../../../model/produto';
 import { QuantidadeControle } from "../../../shared/quantidade-controle/quantidade-controle";
 import { CurrencyPipe } from '@angular/common';
 import { DescontoPipe } from '../../../shared/pipes/desconto/desconto-pipe';
 import { TruncarPipe } from '../../../shared/pipes/truncar/truncar-pipe';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-card-produto',
   imports: [QuantidadeControle, CurrencyPipe, DescontoPipe, TruncarPipe],
@@ -11,6 +12,7 @@ import { TruncarPipe } from '../../../shared/pipes/truncar/truncar-pipe';
   styleUrl: './card-produto.css'
 })
 export class CardProduto {
+  private router = inject(Router);
   produto = input.required<Produto>();
 
   qtde = signal<number>(0);
@@ -23,6 +25,6 @@ export class CardProduto {
   }
 
   onview() {
-    this.view.emit(this.produto().id);
+    this.router.navigate([`produtos/${this.produto().id}`]);
   }
 }

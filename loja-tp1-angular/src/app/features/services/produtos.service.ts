@@ -19,10 +19,10 @@ export class ProdutosService {
         );
     }
 
-    getById(id:number): Observable<Produto>{
-      return this.http.get<any>(`https://fakestoreapi.com/products/:${id}`).pipe(
+    getById(id:number): Observable<Produto | unknown>{
+      return this.http.get<any>(`https://fakestoreapi.com/products/${id}`).pipe(
+        map(json => ProdutoMapper.fromJson(json)),
+        catchError(err => of())
       )
-      
-      //return of(this.listaMock.find(p => p.id == id)).pipe(delay(500));
     }
 }
