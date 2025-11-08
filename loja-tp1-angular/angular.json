@@ -23,7 +23,7 @@
                 "glob": "**/*",
                 "input": "public"
               },
-              "vercel.json"
+              "src/vercel.json"
             ],
             "styles": [
               "src/styles.css"
