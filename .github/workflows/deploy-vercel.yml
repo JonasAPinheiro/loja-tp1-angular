@@ -1,0 +1,82 @@
+# Essa propriedade (name) define o nome do workflow.
+name: Deploy automático do Angular na Vercel
+
+# Basicamente esse on define o "gatilho" ou evento que vai fazer com que esse workflow seja rodado.
+on:
+  # Sempre que houver um push(enviar informações) pro repositório ele vai chamar esse workflow.
+  push:
+    # Aqui dizemos em qual branch ele irá fazer isso.
+    branches:
+    - main
+  
+  # Na atividade foi pedido para não se preocupar com testes, porém eu quis adicionar o pull request para rodar quando alguem abre a requisição.
+  # Sempre que houver um pull request pro repositório ele vai chamar esse workflow.
+  pull_request:
+    # Mesma coisa que no de cima.
+    branches:
+    - main
+
+# Define os "trabalhos"(jobs) que o workflow vai realizar quando acontecer algo do on.
+# Um workflow podem ter diversos trabalhos que rodam em paralelo ou em sequência.
+jobs:
+  # Aqui damos um nome para o job que no caso o meu vai ser "build-and-deploy".
+  build-and-deploy:
+    # O (name) é o nome que vai aparecer nos logs.
+    name: Buildar e publicar na Vercel
+    # Nesse runs-on definimos o sistema(máquina virtual) que o GitHub vai usar para rodar os comandos.
+    # Aqui coloquei a ultima versão do ubuntu, era a que tava na documentação do GitHub Actions.
+    runs-on: ubuntu-latest
+    # Aqui definimos os passos (steps) que o job deve executar.
+    steps: 
+    # Passo 1: Aqui baixamos o código na máquina virtual.
+    - name: Clonando o repositório
+      # Esse uses é utilizado quando estamos usando uma "Action"(script pronto) que alguém já criou ou publicou no GitHub.
+      # Vou utilizar 'actions/checkout@v5' que é a action oficial do GitHub para clonar/baixar o código.
+      uses: actions/checkout@v5
+    
+    # Passo 2: Configurando o ambiente Node.js
+      # Vou Utilizar outra Action pronta 'actions/setup-node@v4' para configurar o node.
+    - name: Configurando o Node.js
+      uses: actions/setup-node@v4
+      
+      # Esse 'with' é usado pra passar parâmetros para uma Action.
+      with: 
+        # Defini a versão do node que vai ser utilizada.
+        node-version: '20'
+    
+    # Passo 3: Instalando as dependências do projeto.
+      # Agora que ja temos o node esse "run" serve para executar um comando no terminal.
+    - name: Instalando as dependências
+      run: npm install
+      # Esse 'working-directory' é utilizado para especificar me qual pasta vai ser executado o comando.
+      working-directory: ./loja-tp1-angular
+
+    # Passo 4: Agora vamos buildar o projeto.
+      # Usar o comando 'npm run build' que é o comando do angular para buildar.
+    - name: Buildando o projeto
+      run: npm run build
+      working-directory: ./loja-tp1-angular
+
+    # Passo 5: Fazer o deploy final para a Vercel.
+      # Basicamente o passo que "publica" o site.
+      # Vou utilizar uma Action pronta 'amondnet/vercel-action@v20'
+    - name: Deploy para o vercel
+      uses: amondnet/vercel-action@v20
+      with:
+        # Agora vamos configurar os segredos(secrets) que eu criei no GitHub
+        # Aqui é passado o token que criei no Vercel.
+        vercel-token: ${{ secrets.VERCEL_TOKEN }}
+
+        # Aqui é passado o meu id do Vercel.
+        vercel-org-id: ${{ secrets.VERCEL_USER_ID}}
+
+        # Aqui é passado o id do projeto no Vercel.
+        vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+
+        # É o caminho completo para a pasta do build, a partir da raiz.
+        vercel-dir: 'loja-tp1-angular/dist/loja-tp1-angular/browser'
+
+        # Esse 'vercel-prod' como 'true' diz ao Vercel que este é um deploy de produção.
+        vercel-prod: 'true'
+    
+
