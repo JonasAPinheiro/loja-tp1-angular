@@ -6,6 +6,7 @@ export interface Produto {
     imageURL?: string;
     promo?: boolean;
     estado?: "novo" | "usado" | "esgotado";
+    categoria: string
 }
 
 const estados = ["novo", "usado", "esgotado"] as const;
@@ -21,6 +22,7 @@ export class ProdutoMapper {
             imageURL: json.image,
             estado: _estado,
             promo: json.id % 5 == 0 && _estado != "esgotado",
+            categoria: json.category
         };
     }
     
@@ -31,7 +33,7 @@ export class ProdutoMapper {
             price: prod.preco,
             description: prod.descricao,
             image: prod.imageURL,
-            category: "general"
+            category: prod.categoria
         }
     }
 }

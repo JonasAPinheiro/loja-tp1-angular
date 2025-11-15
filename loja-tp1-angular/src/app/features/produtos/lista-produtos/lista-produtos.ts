@@ -3,8 +3,8 @@ import { Produto } from '../../../model/produto';
 import { CardProduto } from "../card-produto/card-produto";
 import { ProdutosService } from '../../services/produtos.service';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'lista-produtos',
@@ -33,5 +33,9 @@ export class ListaProdutos {
 
   onViewProduct(id: number){
     alert(`Id do produto: ${id}`);
+  }
+
+  onCreateProduct(rota: string) {
+    this.router.navigate([rota])
   }
 }
